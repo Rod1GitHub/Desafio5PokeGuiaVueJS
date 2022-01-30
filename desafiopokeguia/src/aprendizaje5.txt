@@ -1,0 +1,74 @@
+html
+====
+v-model="nombrePokemon"
+<button type="submit" @click.prevent="searchPokemon">Buscar</button>
+<PokeDetails :detallePokemon="detallePokemon" />
+
+script
+======
+import PokeDetails from "@/components/PokeDetails";
+import { getPokemonDetailByName } from "@/api/FetchPokeApi";
+
+components: {
+    PokeDetails,
+  }
+
+  data() {
+    return {
+      nombrePokemon: "",
+      detallePokemon: {},
+    };
+  }
+
+  methods: {
+    async searchPokemon() {
+      const { nombrePokemon } = this;
+      this.detallePokemon = await getPokemonDetailByName(nombrePokemon);
+    },
+  }
+
+  async created() {
+    this.detallePokemon = await getPokemonDetailByName("pikachu");
+  }
+
+
+
+components
+=========
+
+html
+==
+ <img :src="detallePokemon.imagen" alt="imagen pokemon" />
+ <div v-for="(habilidad, index) in detallePokemon.habilidades" :key="index">
+ <p>{{ habilidad.ability.name }}</p>
+  <div v-for="(movimientos, index) in detallePokemon.movimientos" :key="index">
+  <p>{{ movimientos.move.name }}</p>
+
+script
+==
+  props: {
+    detallePokemon: {},
+  },
+
+  api
+  =====
+export const BASE_URL_API = 'https://pokeapi.co/api/v2/';
+export const GET_POKEMON_BY_NAME = valueNamePokemon => `pokemon/${valueNamePokemon}`;
+export const getPokemonDetailByName = async (valueNamePokemon) => {
+    return await fetch(`${BASE_URL_API}${GET_POKEMON_BY_NAME(valueNamePokemon.toLowerCase())}`)
+        .then(response => response.json())
+        .then(responseJson => {
+            return pokemonResource(responseJson);
+        })
+        .catch(error => {
+            console.error({ error });
+        })
+}
+
+export const pokemonResource = bodyResponsePokemon => {
+    return {
+        habilidades: bodyResponsePokemon.abilities,
+        movimientos: bodyResponsePokemon.moves,
+        imagen: bodyResponsePokemon.sprites.front_default,
+    }
+}
