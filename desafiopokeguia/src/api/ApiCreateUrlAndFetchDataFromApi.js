@@ -30,6 +30,10 @@ export const fetchTopLevelDataFromApiAndExecuteFunctionChooseSecondLevelDataFrom
 export const chooseSecondLevelDataFromApi = (responseJsonStep2) => {
   console.log(`3.chooseSecondLevelDataFromApi`);
   console.log(responseJsonStep2);
+  console.log(responseJsonStep2.forms);
+  console.log(responseJsonStep2.abilities);
+  console.log(responseJsonStep2.moves);
+  console.log(responseJsonStep2.sprites.front_default);
   return {
     namesKey: responseJsonStep2.forms,
     skillsKey: responseJsonStep2.abilities,
