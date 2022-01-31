@@ -14,20 +14,21 @@
     <section>
       <img src="./assets/pokemon_logo.png" />
     </section>
-    <input type="text" v-model="userInputData" />
-    <button @click="captureUserInputDataAndExecuteFunctionFetchDataFromApi">
+    <input type="text" v-model="userInputDataStep1" />
+    <button
+      @click="captureUserInputDataAndExecuteFunctionFetchTopLevelDataFromApi"
+    >
       Capturar Input y Fetch Api
     </button>
 
-    <ComponentDisplayCharacter
-      :characterAttributesDataFromApi="characterAttributesDataFromApi"
-    />
+    <ComponentDisplayCharacter :characterDataFromApi="characterDataFromApi" />
   </div>
 </template>
 
 <script>
 import ComponentDisplayCharacter from "./components/ComponentDisplayCharacter";
-import { fetchDataFromApi } from "./api/ApiCreateUrlAndFetchDataFromApi";
+import { fetchTopLevelDataFromApiAndExecuteFunctionChooseSecondLevelDataFromApi } from "./api/ApiCreateUrlAndFetchDataFromApi";
+
 export default {
   name: "App",
   components: {
@@ -35,21 +36,26 @@ export default {
   },
   data() {
     return {
-      userInputData: "",
-      characterAttributesDataFromApi: {},
+      userInputDataStep1: "",
+      characterDataFromApi: {},
     };
   },
   methods: {
-    async captureUserInputDataAndExecuteFunctionFetchDataFromApi() {
-      let { userInputData } = this; // captura en la variable el texto ingresado por el usuario
-      this.characterAttributesDataFromApi = await fetchDataFromApi(
-        userInputData
+    async captureUserInputDataAndExecuteFunctionFetchTopLevelDataFromApi() {
+      console.log(
+        `1.captureUserInputDataAndExecuteFunctionFetchTopLevelDataFromApi`
       );
+      let { userInputDataStep1 } = this; // captura en la variable el texto ingresado por el usuario
+      console.log(`userInputDataStep1: ${userInputDataStep1}`);
+      this.characterDataFromApi =
+        await fetchTopLevelDataFromApiAndExecuteFunctionChooseSecondLevelDataFromApi(
+          userInputDataStep1
+        );
     },
   },
-  async created() {
-    this.characterAttributesDataFromApi = await fetchDataFromApi("pikachu");
-  },
+  /*   async created() {
+    this.characterDataFromApi = await fetchTopLevelDataFromApiAndExecuteFunctionChooseSecondLevelDataFromApi("pikachu");
+  }, */
 };
 </script>
 
