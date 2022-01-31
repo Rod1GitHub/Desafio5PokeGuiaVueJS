@@ -11,8 +11,9 @@
       <li>pidgeot</li>
       <li>raticate</li>
     </ul>
-
-    <img src="./assets/pokemon_logo.png" />
+    <section>
+      <img src="./assets/pokemon_logo.png" />
+    </section>
     <input type="text" v-model="userInputData" />
     <button @click="captureUserInputDataAndExecuteFunctionFetchDataFromApi">
       Capturar Input y Fetch Api
