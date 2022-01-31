@@ -12,47 +12,42 @@
       <li>raticate</li>
     </ul>
 
-    <img class="poke_logo" src="./assets/pokemon_logo.png" alt="pokemon logo" />
-    <section>
-      <input type="text" v-model="nameInputbyUserPokemon007" />
-      <button
-        type="submit"
-        @click.prevent="passInputNameToGetDataFromApiMethod007"
-      >
-        Asignar Input a URL para llamar API
-      </button>
-    </section>
-    <PokemonObjectAttributeComponent007
-      :attributesPokemon007="attributesPokemon007"
+    <img src="./assets/pokemon_logo.png" />
+    <input type="text" v-model="userInputData" />
+    <button @click="captureUserInputDataAndExecuteFunctionFetchDataFromApi">
+      Capturar Input y Fetch Api
+    </button>
+
+    <ComponentDisplayCharacter
+      :characterAttributesDataFromApi="characterAttributesDataFromApi"
     />
   </div>
 </template>
 
 <script>
-import PokemonObjectAttributeComponent007 from "@/components/PokemonObjectAttributeComponent";
-import { getDataFromApiPokemon007 } from "./api/ApiUrlFetchPokemon007";
+import ComponentDisplayCharacter from "./components/ComponentDisplayCharacter";
+import { fetchDataFromApi } from "./api/ApiCreateUrlAndFetchDataFromApi";
 export default {
   name: "App",
   components: {
-    PokemonObjectAttributeComponent007,
+    ComponentDisplayCharacter,
   },
   data() {
     return {
-      nameInputbyUserPokemon007: "",
-      attributesPokemon007: {},
+      userInputData: "",
+      characterAttributesDataFromApi: {},
     };
   },
   methods: {
-    async passInputNameToGetDataFromApiMethod007() {
-      let { nameInputbyUserPokemon007 } = this; // captura en la variable el texto ingresado por el usuario
-      this.attributesPokemon007 = await getDataFromApiPokemon007(
-        nameInputbyUserPokemon007
+    async captureUserInputDataAndExecuteFunctionFetchDataFromApi() {
+      let { userInputData } = this; // captura en la variable el texto ingresado por el usuario
+      this.characterAttributesDataFromApi = await fetchDataFromApi(
+        userInputData
       );
-      console.log(nameInputbyUserPokemon007);
     },
   },
   async created() {
-    this.attributesPokemon007 = await getDataFromApiPokemon007("pikachu");
+    this.characterAttributesDataFromApi = await fetchDataFromApi("pikachu");
   },
 };
 </script>

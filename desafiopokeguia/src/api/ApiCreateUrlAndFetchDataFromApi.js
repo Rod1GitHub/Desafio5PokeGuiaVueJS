@@ -2,11 +2,10 @@
 // 2 pasar el input a la URL
 // 3 traer los datos desde la URL
 
-export const BASE_URL_API = "https://pokeapi.co/api/v2/";
-export const GET_POKEMON_BY_NAME = (valueNamePokemon) =>
-  `pokemon/${valueNamePokemon}`;
+export const BASE_URL_API = "https://pokeapi.co/api/v2/pokemon/";
+export const GET_POKEMON_BY_NAME = (valueNamePokemon) => `${valueNamePokemon}`;
 
-export const getDataFromApiPokemon007 = async (valueNamePokemon) => {
+export const fetchDataFromApi = async (valueNamePokemon) => {
   return await fetch(
     `${BASE_URL_API}${GET_POKEMON_BY_NAME(valueNamePokemon.toLowerCase())}`
   )
@@ -21,8 +20,9 @@ export const getDataFromApiPokemon007 = async (valueNamePokemon) => {
 
 export const pokemonResource = (bodyResponsePokemon) => {
   return {
-    skills: bodyResponsePokemon.abilities,
-    movements: bodyResponsePokemon.moves,
-    imagen: bodyResponsePokemon.sprites.front_default,
+    namesKey: bodyResponsePokemon.forms,
+    skillsKey: bodyResponsePokemon.abilities,
+    movementsKey: bodyResponsePokemon.moves,
+    imagesKey: bodyResponsePokemon.sprites.front_default,
   };
 };
